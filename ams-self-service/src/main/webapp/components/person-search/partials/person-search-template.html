@@ -1,0 +1,199 @@
+<div class="align-left alert alert-danger" ng-if="errorMessageExist === true">
+    <div>error messages:</div>
+    <li ng-repeat="error in personSearchResultMessages">
+        {{error.value}}
+    </li>
+</div>
+
+<div style="width:100%;" ng-if="personSearchCompleted == false">
+    <form name="personSearchForm" class="form-horizontal" novalidate>
+        <div class="row">
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-5">
+                <fieldset style="border: 1px solid green">
+                    <legend>&nbsp;Name</legend>
+                    <div class="form-group form-group-sm { 'has-error' : personSearchForm.firstName.$invalid && personSearchForm.firstName.$dirty}">
+                        <label class="col-md-3 text-right" for="firstName">First Name</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="firstName" name="firstName" ng-model="vaPersonSearchCriteriaInfo.firstName">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm { 'has-error' : personSearchForm.middleName.$invalid && personSearchForm.middleName.$dirty}">
+                        <label class="col-md-3 text-right" for="middleName">Middle Name</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="middleName" name="middleName" ng-model="vaPersonSearchCriteriaInfo.middleName">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm { 'has-error' : personSearchForm.lastName.$invalid && personSearchForm.lastName.$dirty}">
+                        <label class="col-md-3 text-right" for="lastName">*Last Name</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="lastName" name="lastName" ng-model="vaPersonSearchCriteriaInfo.lastName">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-5">
+                <fieldset>
+                    <legend>&nbsp;Person</legend>
+                    <div class="form-group form-group-sm { 'has-error' : personSearchForm.dateOfBirth.$invalid && personSearchForm.dateOfBirth.$dirty}">
+                        <label class="col-md-3 text-right" for="dateOfBirth">*Date of Birth</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth" ng-model="vaPersonSearchCriteriaInfo.dob">
+                        </div>
+                        <div class="col-md-4">
+                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            <span class="sr-only">Date Picker:</span>
+                            <small>(DOB) format: YYYYMMDD)</small>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm { 'has-error' : personSearchForm.gender.$invalid && personSearchForm.gender.$dirty}">
+                        <label class="col-md-3 text-right" for="gender">*Gender</label>
+                        <div class="col-md-2">
+                            <select class="form-control" id="gender" name="gender" ng-model="vaPersonSearchCriteriaInfo.gender">
+                                <option value="volvo">Select One</option>
+                                <option value="saab">Male</option>
+                                <option value="mercedes">Female</option>
+                                <option value="audi">Undifferentiated</option>
+                            </select>
+                        </div>
+                        <div class="col-md-7"></div>
+                    </div>
+                    <div class="form-group form-group-sm { 'has-error' : personSearchForm.primaryPhoneNumber.$invalid && personSearchForm.primaryPhoneNumber.$dirty}">
+                        <label class="col-md-3 text-right" for="primaryPhoneNumber">Primary Phone</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="primaryPhoneNumber" name="primaryPhoneNumber" ng-model="vaPersonSearchCriteriaInfo.primaryPhoneNumber">
+
+                        </div>
+                        <div class="col-md-4">
+                            <small>(format: ##########)</small>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-1">
+
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-5">
+                <fieldset>
+                    <legend>&nbsp;Address</legend>
+                    <div class="form-group form-group-sm { 'has-error' : personSearchForm.streetAddress.$invalid && personSearchForm.streetAddress.$dirty}">
+                        <label class="col-md-3 text-right" for="streetAddress">Street Address</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="streetAddress" name="streetAddress" ng-model="vaPersonSearchCriteriaInfo.streetAddress">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm { 'has-error' : personSearchForm.city.$invalid && personSearchForm.city.$dirty}">
+                        <label class="col-md-3 text-right" for="city">City</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="city" name="city" ng-model="vaPersonSearchCriteriaInfo.city">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm { 'has-error' : personSearchForm.state.$invalid && personSearchForm.state.$dirty}">
+                        <label class="col-md-3 text-right" for="state">State</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="state" name="state" ng-model="vaPersonSearchCriteriaInfo.state">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm { 'has-error' : personSearchForm.zipcode.$invalid && personSearchForm.zipcode.$dirty}">
+                        <label class="col-md-3 text-right" for="zipcode">Zip Code</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="zipcode" name="zipcode" ng-model="vaPersonSearchCriteriaInfo.zipcode">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-5">
+                <fieldset>
+                    <legend>&nbsp;Indentification</legend>
+                    <div class="form-group form-group-sm { 'has-error' : personSearchForm.ssn.$invalid && personSearchForm.ssn.$dirty}">
+                        <label class="col-md-3 text-right" for="ssn">SSN</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="ssn" name="ssn" ng-model="vaPersonSearchCriteriaInfo.ssn">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm invisible">
+                        <label class="col-md-3 text-right" for="placeHoldercity">City</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="placeHoldercity">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm invisible">
+                        <label class="col-md-3 text-right" for="placeHolderState">State</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="placeHolderState">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm invisible">
+                        <label class="col-md-3 text-right" for="placeHolderZipcode">Zip Code</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" id="placeHolderZipcode">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-md-1">
+
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-5">
+                <div class="pull-left">
+                    <button class="btn btn-default" type="submit" value="Submit" ng-click="reset(personSearchForm)">Clear</button>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="pull-right">
+                    <button class="btn btn-primary"  type="submit" value="Submit" ng-disabled="personSearchForm.$invalid" ng-click="search(vaPersonSearchCriteriaInfo)">Search</button>
+                </div>
+            </div>
+            <div class="col-md-1">
+
+            </div>
+        </div>
+    </form>
+</div>
+<div style="border: 1px solid black" ng-if="personSearchCompleted == true">
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-show="isUnattendedSearch()">Please confirm that this is the person you want to set up as your VA Healthcare Proxy:</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">Delegate:</div>
+        <div class="col-md-10">{{selectedPerson.firstName}} {{selectedPerson.lastName}}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">SSN:</div>
+        <div class="col-md-10">{{selectedPerson.ssn}}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">Gender:</div>
+        <div class="col-md-10">{{selectedPerson.gender}}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">DOB:</div>
+        <div class="col-md-10">{{selectedPerson.dob | date : yyyyMMdd}}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">Address:</div>
+        <div class="col-md-10">
+            {{selectedPerson.street1}}
+        </div>
+    </div>
+</div>

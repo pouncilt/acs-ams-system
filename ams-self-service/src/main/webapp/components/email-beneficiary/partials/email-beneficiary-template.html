@@ -1,0 +1,48 @@
+<div style="border: 1px solid black" ng-if="veteranBeneficiaryEmailSent == false">
+    <div style="border: 1px solid red">
+        After you submit your form using the Submit button below, an e-mail notification will be sent out to the delegate to the address:
+    </div>
+    <div style="border: 1px solid green">{{veteranBeneficiaryInfo.primaryEmail}}</div>
+    <div style="border: 1px solid orange">
+        <span>
+            Please provide an additional e-mail address for delegate if needed:
+        </span>
+        <span>
+            <input type="text" name="beneficiarySecondaryEmail" ng-model="veteranBeneficiaryInfo.secondaryEmail" value=""/>
+        </span>
+    </div>
+    <div style="border: 1px solid blue">
+        <span>
+            If you would like to receive a copy of this e-mail, please enter your e-mail address here:
+        </span>
+        <span>
+            <input type="text" name="veteranEmail" ng-model="veteranInfo.primaryEmail" value=""/>
+        </span>
+    </div>
+    <div style="border: 1px solid darkred; float: right">
+        <button type="submit" value="Submit" ng-click="sendEmail()">Submit</button>
+    </div>
+</div>
+<div style="border: 1px solid black" ng-if="veteranBeneficiaryEmailSent == true">
+    <div style="border: 1px solid red">
+        <b>Your {{action}} form has successfully been submitted!</b><br>
+        Your request was submitted on {{todaysDate | date : format}}.
+    </div>
+    <div style="border: 1px solid green">
+
+        <p>
+           An e-mail notification has been sent to {{veteranBeneficiaryInfo.fullName}} at {{veteranBeneficiaryInfo.primaryEmail}} requesting to manage your online access.
+           This will only take effect when the recipient logs into the Veteran Delegation Tool and elects to accept this request initiated by you.
+        </p>
+
+        <p>
+            Delegation: VA Healthcare Proxy. Selected Permissions: Read/Print/Download. Delegation Start Date: 20150915, Delegation End Date: 20160915.
+        </p>
+    </div>
+    <div style="border: 1px solid orange">
+        &nbsp;
+    </div>
+    <div style="border: 1px solid purple; float:right">
+        <button type="submit" value="Return Home" ng-click="navigateTo(pathInfo)">Return to Home</button>
+    </div>
+</div>
