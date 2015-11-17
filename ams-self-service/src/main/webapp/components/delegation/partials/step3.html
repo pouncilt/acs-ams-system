@@ -1,1 +1,60 @@
-step 3
+<div style="width:100%;" ng-if="isUnattended()== false">
+
+    <div class="row">
+        <div class="col-md-12">
+            <strong>Please choose Read/Print/Download or Full preferences:</strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <div class="pull-right">
+                <input type="radio" ng-model="panel.form.delegationPermission" value="Read/Print/Download">
+            </div>
+        </div>
+        <div class="col-md-11">
+            <strong>Read/Print/Download:</strong> Allows the VA Healthcare Proxy (VAHP) to read, print, or download your
+            data, but nothing else.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <div class="pull-right">
+                <input type="radio" ng-model="panel.form.delegationPermission" value="Full">
+            </div>
+        </div>
+        <div class="col-md-11">
+            <strong>Full:</strong> Allows the VAHP to enter data and take actions such as refilling prescriptions, in
+            addition to being able to read, print, and download.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div>&nbsp;</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <strong>Delegate Selected:</strong> {{selectedDelegate.firstName}} {{selectedDelegate.lastName}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div>&nbsp;</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            The VA Healthcare Proxy will remain in effect for ten years. You may use this system to revoke it at any
+            time.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary pull-right" type="button"
+                    ng-click="confirmDelegationPreferences(panel.form.delegationPermission);doNextStep(panel);"
+                    ng-disabled="(panel.form.delegationPermission === null || panel.form.delegationPermission === undefined)">
+                Next
+            </button>
+        </div>
+    </div>
+</div>

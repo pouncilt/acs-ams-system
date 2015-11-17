@@ -44,7 +44,7 @@ vaPersonSearchModule.controller('PersonSearchController', ['$scope', '$location'
         $location.path(path);
     };
 
-    $scope.reset = function(form) {
+    $scope.resetForm = function (form) {
         $scope.vaPersonSearchCriteriaInfoInfo = {
             person: {
                 addresses: [],
@@ -67,7 +67,7 @@ vaPersonSearchModule.controller('PersonSearchController', ['$scope', '$location'
     };
 
     $scope.search = function (vaPersonSearchCriteriaInfo) {
-        vaPersonSearchCriteriaInfo.attendedSearch = (this.isAttendedSearch()) ? true : false;
+        vaPersonSearchCriteriaInfo.attendedSearch = ($scope.isAttendedSearch()) ? true : false;
 
         PersonSearchService.queryPerson(vaPersonSearchCriteriaInfo).then(function (searchResults) {
             $scope.personSearchCompleted = false;
@@ -109,11 +109,38 @@ vaPersonSearchModule.controller('PersonSearchController', ['$scope', '$location'
         });
 
         modalInstance.result.then(function (selectedPerson) {
-            console.log("selectedPerson:" + selectedPerson);
             $scope.selectedPerson = selectedPerson; //new VAPerson(selectedPerson).toUIObject();
             $scope.personSearchCompleted = true;
         }, function(error){
             $scope.personSearchCompleted = false;
         });
     };
+
+    $scope.displayReturnToSearchModal = function (panel) {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'components/person-search/partials/person-search-return-to-search.html',
+            controller: 'PersonSearchReturnToSearchModalController',
+            controllerAs: 'personSearchReturnToSearchModalController',
+            size: 'sm'
+        });
+
+        modalInstance.result.then(function (returnToSearch) {
+            if (returnToSearch) {
+                $scope.selectedPerson = null; //new VAPerson(selectedPerson).toUIObject();
+                $scope.personSearchCompleted = false;
+                $scope.reset();
+            }
+        }, function (error) {
+            //TODO: Maybe do something with error reason.
+        });
+    };
+
+    $scope.confirmDelegate = function () {
+        $scope.$emit('Delegate Confirmed', {confirmedDelegate: $scope.selectedPerson});
+    };
+
+    $scope.$on('Reset Form', function (event, args) {
+        var someForm = $scope[args.formName];
+        console.log(someForm);
+    });
 }]);

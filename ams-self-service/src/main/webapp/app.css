@@ -1,43 +1,32 @@
 /* app css stylesheet */
 
 .menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
 }
 
 .menu:before {
-  content: "[";
+    content: "[";
 }
 
 .menu:after {
-  content: "]";
+    content: "]";
 }
 
 .menu > li {
-  display: inline;
+    display: inline;
 }
 
 .menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+    content: "|";
+    padding-right: 0.3em;
 }
 
 .menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
-}
-
-fieldset {
-  display: block;
-  margin-left: 2px;
-  margin-right: 2px;
-  padding-top: 0.35em;
-  padding-bottom: 0.625em;
-  padding-left: 0.75em;
-  padding-right: 0.75em;
-  border: 1px solid gray;
+    content: "";
+    padding: 0;
 }
 
 body,
@@ -53,31 +42,100 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: Helvetica, Arial, sans-serif !important;
+    font-family: Helvetica, Arial, sans-serif !important;
 }
 
 .nopadding {
-  padding: 0 !important;
-  margin: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.padding-left-5 {
+    padding-left: 5px;
+}
+
+.padding-right-5 {
+    padding-right: 5px;
 }
 
 .bottom-buffer-15 {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
-fieldset.va-person-search-border {
-  border: 1px groove #ddd !important;
-  padding: 0 1.4em 1.4em 1.4em !important;
-  margin: 0 0 1.5em 0 !important;
-  -webkit-box-shadow: 0px 0px 0px 0px #000;
-  box-shadow: 0px 0px 0px 0px #000;
+.v-center {
+    display: table !important;
 }
 
-legend.va-person-search-border {
-  font-size: 1.2em !important;
-  font-weight: bold !important;
-  text-align: left !important;
-  width: inherit; /* Or auto */
-  padding: 10px 10px; /* To give a bit of padding on the left and right */
-  border-bottom: none;
+.content {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+    min-height: 100% !important; /* for the latest browsers which support min-height */
+    height: inherit !important; /* for newer IE versions */
+    height: 100% !important; /* the only height-related attribute that IE6 does not ignore  */
+    /*border: 1px solid #f00;*/ /* debug */
+}
+
+.va-container {
+    margin: 10px 50px;
+    width: 991px;
+}
+
+.va-seal-header-container {
+    background-image: url("images/va-seal-header-background-color.png");
+    background-color: #01133F;
+    padding: 0px;
+    width: 991px;
+    height: 87px;
+}
+
+.va-header-container {
+    background-color: #28a4c9;
+    width: 991px;
+
+}
+
+.va-body-container {
+    background-color: white;
+    border-right: 1px solid lightgrey;
+    border-left: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+    width: 991px;
+}
+
+.va-seal-img {
+    position: relative;
+    left: 2px;
+    top: 2px;
+}
+
+.left {
+    width: auto;
+    background: transparent;
+    height: 100%;
+    overflow: hidden;
+}
+
+.right {
+    height: 38px;
+    width: 25px;
+    background: transparent;
+    float: left;
+    position: relative;
+    margin-right: 10px;
+}
+
+div.right span {
+    margin: 0;
+    background: green;
+    padding: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.glyphicon.glyphicon-ok {
+    font-size: 18px;
 }

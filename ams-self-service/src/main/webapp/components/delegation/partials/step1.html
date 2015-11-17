@@ -1,1 +1,34 @@
-step 1
+<div class="row">
+    <div class="col-md-12">
+        <strong>Please select a Delegation Type:</strong>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-1">
+        <input type="radio" ng-model="panel.form.delegationType" value="VA Healthcare Proxy">
+    </div>
+    <div class="col-md-11">
+        <strong>VA Healthcare Proxy:</strong> You can grant a trusted person to be your VA Healthcare Proxy. Your VA
+        Healthcare Proxy can
+        sign in to patient-facing VA applications like MyHealtheVet and view your healthcare data just as you would. You
+        can decide whether your VA Healthcare Proxy receives Read/Print/Download access or Full access, which would
+        allow
+        them to enter data and take actions such as refilling prescriptions.
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div>&nbsp;</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-11">
+        <strong>Selected Delegation Type:</strong> {{panel.form.delegationType}}
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-primary" type="button" ng-click="doNextStep(panel)"
+                ng-disabled="(panel.form.delegationType === null || panel.form.delegationType === undefined)">
+            Next
+        </button>
+    </div>
+</div>

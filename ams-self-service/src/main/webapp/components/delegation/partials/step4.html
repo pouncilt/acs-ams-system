@@ -1,1 +1,21 @@
-step 4
+<div style="width:100%;" ng-if="isUnattended()== false">
+    <div class="row">
+        <div class="col-md-12">
+            <p>PDF goes here.</p>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-xs-6">
+            <button class="btn btn-default pull-left" type="submit" value="Submit" ng-click="go('/delegation')">
+                Cancel
+            </button>
+        </div>
+        <div class="col-xs-6">
+            <button class="btn btn-primary pull-right" type="submit" value="Submit"
+                    ng-disabled="personSearchForm.$invalid"
+                    ng-click="doNextStep(panel);">Ready to Sign
+            </button>
+        </div>
+    </div>
+</div>

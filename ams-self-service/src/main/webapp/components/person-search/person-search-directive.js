@@ -7,7 +7,9 @@ vaPersonSearchModule.directive('veteranPersonSearch', [function () {
         scope: {
             staffInfo: '=',
             veteranInfo: '=',
-            pathInfo: '@'
+            pathInfo: '@',
+            confirm: '&onConfirm',
+            reset: '&onReset'
         },
         controller: 'PersonSearchController',
         controllerAs: 'personSearchController',

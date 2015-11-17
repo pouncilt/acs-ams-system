@@ -1,12 +1,42 @@
 <div ng-controller="DelegationAccordionController">
+    <script type="text/ng-template" id="group-template.html">
+        <div style="margin: 10px 20px;">
+            <div class="right">
+                <span ng-if="$parent.isStepCompleted(heading)" class="glyphicon glyphicon-ok" aria-hidden="true"
+                      style="color: #ffffff;"></span>
+            </div>
+            <div class="left">
+                <div class="panel {{panelClass || 'panel-default'}}">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()"
+                               uib-accordion-transclude="heading">
+                                <span ng-class="{'text-muted': isDisabled}">{{heading}}</span>
+                            </a>
+
+                            <i class="pull-right glyphicon"
+                               ng-class="{'glyphicon-chevron-down': isOpen, 'glyphicon-chevron-right': !isOpen}">
+                            </i>
+                        </h4>
+                    </div>
+                    <div class="panel-collapse collapse" uib-collapse="!isOpen">
+                        <div class="panel-body" ng-transclude></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
     <uib-accordion close-others="enableOnePanelAtATime">
-        <uib-accordion-group is-open="panel.isOpen" ng-repeat="panel in accordionPanels">
-            <uib-accordion-heading>
-                {{panel.title}} <i class="pull-right glyphicon"
-                                   ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-            </uib-accordion-heading>
+        <uib-accordion-group heading="{{panel.title}}"
+                             is-open="panel.isOpen"
+                             is-disabled="panel.isDisabled"
+                             template-url="group-template.html"
+                             ng-repeat="panel in accordionPanels">
             <!--div ng-if="panel.isOpen"-->
-            <ng-include src="panel.contentUrl"></ng-include><!--/div-->
+            <ng-include src="panel.contentUrl"></ng-include>
+            <!--/div-->
         </uib-accordion-group>
     </uib-accordion>
+
 </div>

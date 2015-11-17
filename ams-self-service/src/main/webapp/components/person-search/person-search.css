@@ -1,0 +1,146 @@
+/*fieldset {
+    display: block;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 0em;!*0.75em*!
+    padding-right: 0em;!*0.75em*!
+    border: 1px solid gray;
+}*/
+
+fieldset.va-person-search-border {
+    border: 1px solid #ddd !important;
+    padding: 5px 10px 10px 5px !important;
+    margin: 0px 0px 0px 0px !important;
+}
+
+legend.va-person-search-border {
+    font-size: 1em !important;
+    font-weight: normal !important;
+    text-align: left !important;
+    width: inherit; /* Or auto */
+    padding: 10px 10px; /* To give a bit of padding on the left and right */
+    border-bottom: none;
+    /*background-color: #28a4c9;*/ /* debug */
+}
+
+fieldset.va-person-search-border > div {
+    overflow: hidden;
+}
+
+fieldset.va-person-search-border div > .fieldset-container {
+    /*background-color: gold;*/ /* debug */
+    height: 2.25em;
+
+}
+
+fieldset.va-person-search-border label {
+    display: block;
+    /*border: 1px solid #f00;*/ /* debug */
+    min-height: 100%; /* for the latest browsers which support min-height */
+    height: auto !important; /* for newer IE versions */
+    height: 100%; /* the only height-related attribute that IE6 does not ignore  */
+    overflow: auto;
+}
+
+fieldset.va-person-search-border small {
+    font-size: x-small;
+}
+
+fieldset.va-person-search-border .fieldset-container {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+fieldset.va-person-search-border label {
+    cursor: default;
+    font-size: 1em !important;
+    font-weight: normal !important;
+}
+
+fieldset.va-person-search-border .col-lg-1,
+fieldset.va-person-search-border .col-lg-2,
+fieldset.va-person-search-border .col-lg-3,
+fieldset.va-person-search-border .col-lg-4,
+fieldset.va-person-search-border .col-lg-5,
+fieldset.va-person-search-border .col-lg-6,
+fieldset.va-person-search-border .col-lg-7,
+fieldset.va-person-search-border .col-lg-8,
+fieldset.va-person-search-border .col-lg-9,
+fieldset.va-person-search-border .col-lg-10,
+fieldset.va-person-search-border .col-lg-11,
+fieldset.va-person-search-border .col-lg-12 {
+    /*background-color:red;*/ /* debug */
+}
+
+fieldset.va-person-search-border .col-md-1,
+fieldset.va-person-search-border .col-md-2,
+fieldset.va-person-search-border .col-md-3,
+fieldset.va-person-search-border .col-md-4,
+fieldset.va-person-search-border .col-md-5,
+fieldset.va-person-search-border .col-md-6,
+fieldset.va-person-search-border .col-md-7,
+fieldset.va-person-search-border .col-md-8,
+fieldset.va-person-search-border .col-md-9,
+fieldset.va-person-search-border .col-md-10,
+fieldset.va-person-search-border .col-md-11,
+fieldset.va-person-search-border .col-md-12 {
+    /*background-color:yellow;*/ /* debug */
+    max-height: inherit;
+}
+
+fieldset.va-person-search-border .col-sm-1,
+fieldset.va-person-search-border .col-sm-2,
+fieldset.va-person-search-border .col-sm-3,
+fieldset.va-person-search-border .col-sm-4,
+fieldset.va-person-search-border .col-sm-5,
+fieldset.va-person-search-border .col-sm-6,
+fieldset.va-person-search-border .col-sm-7,
+fieldset.va-person-search-border .col-sm-8,
+fieldset.va-person-search-border .col-sm-9,
+fieldset.va-person-search-border .col-sm-10,
+fieldset.va-person-search-border .col-sm-11,
+fieldset.va-person-search-border .col-sm-12 {
+    /*background-color:green;*/ /*debug*/
+    max-height: inherit;
+}
+
+fieldset.va-person-search-border .col-xs-1,
+fieldset.va-person-search-border .col-xs-2,
+fieldset.va-person-search-border .col-xs-3,
+fieldset.va-person-search-border .col-xs-4,
+fieldset.va-person-search-border .col-xs-5,
+fieldset.va-person-search-border .col-xs-6,
+fieldset.va-person-search-border .col-xs-7,
+fieldset.va-person-search-border .col-xs-8,
+fieldset.va-person-search-border .col-xs-9,
+fieldset.va-person-search-border .col-xs-10,
+fieldset.va-person-search-border .col-xs-11,
+fieldset.va-person-search-border .col-xs-12 {
+    /*background-color:yellow;*/ /*debug*/
+    /*border: 1px solid black;*/ /*debug*/
+    max-height: inherit;
+}
+
+.va-modal-container {
+
+}
+
+.va-modal-seal-header-container {
+    background-image: url("images/va-seal-header-background-color.png");
+    background-color: #01133F;
+    padding: 0px;
+    height: 87px;
+}
+
+.va-modal-header-container {
+    background-color: #28a4c9;
+}
+
+.va-modal-body-container {
+    background-color: white;
+    border-right: 1px solid lightgrey;
+    border-left: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+}

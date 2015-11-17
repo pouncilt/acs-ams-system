@@ -5,16 +5,19 @@ var myApp = angular.module('myApp', [
         'gov.va.delegation.module',
         'gov.va.email.beneficiary.module',
         'gov.va.person.search.module',
-    'ngRoute',
-    'ngResource',
-    'ngTable',
-    'myApp.view1',
-    'myApp.view2',
-        'myApp.version'
-])
-.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.otherwise({redirectTo: '/view1'});
-}]);
+        'ngRoute',
+        'ngResource',
+        'ngTable'
+    ])
+    .config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.otherwise({redirectTo: '/home'});
+        $routeProvider.when('/home', {
+            templateUrl: 'partials/home.html'
+        });
+        $routeProvider.when('/veteran-delegations', {
+            templateUrl: 'partials/veteran-delegations.html'
+        });
+    }]);
 
 myApp.appendTransform = function (defaults, transform) {
 
