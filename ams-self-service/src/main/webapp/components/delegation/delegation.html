@@ -1,0 +1,12 @@
+<div ng-controller="DelegationAccordionController">
+    <uib-accordion close-others="enableOnePanelAtATime">
+        <uib-accordion-group is-open="panel.isOpen" ng-repeat="panel in accordionPanels">
+            <uib-accordion-heading>
+                {{panel.title}} <i class="pull-right glyphicon"
+                                   ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+            </uib-accordion-heading>
+            <!--div ng-if="panel.isOpen"-->
+            <ng-include src="panel.contentUrl"></ng-include><!--/div-->
+        </uib-accordion-group>
+    </uib-accordion>
+</div>

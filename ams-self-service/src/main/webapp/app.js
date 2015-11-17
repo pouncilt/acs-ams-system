@@ -2,14 +2,15 @@
 
 // Declare app level module which depends on views, and components
 var myApp = angular.module('myApp', [
+        'gov.va.delegation.module',
+        'gov.va.email.beneficiary.module',
+        'gov.va.person.search.module',
     'ngRoute',
     'ngResource',
     'ngTable',
     'myApp.view1',
     'myApp.view2',
-    'myApp.version',
-    'gov.va.email.beneficiary.module',
-    'gov.va.person.search.module'
+        'myApp.version'
 ])
 .config(['$routeProvider', function ($routeProvider) {
     $routeProvider.otherwise({redirectTo: '/view1'});

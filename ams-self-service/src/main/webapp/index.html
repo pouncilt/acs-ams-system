@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
+  <title>VA Delegation GUI Prototypes</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -19,10 +19,9 @@
 </head>
 <body ng-controller="AppController">
   <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-    <li><a href="#/email-beneficiary">email-beneficiary</a></li>
-    <li><a href="#/person-search">person-search</a></li>
+    <li><a href="#/attended-person-search">attended-person-search</a></li>
+    <li><a href="#/unattended-person-search">unattended-person-search</a></li>
+    <li><a href="#/delegation">delegation</a></li>
   </ul>
 
   <!--[if lt IE 7]>
@@ -31,7 +30,7 @@
 
   <div ng-view></div>
 
-  <div>Angular seed app: v<span app-version></span></div>
+  <!--div>VA AMS Self Service: v<span app-version></span></div-->
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -39,6 +38,7 @@
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/lodash/lodash.min.js"></script>
   <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
   <script src="bower_components/angular-resource/angular-resource.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -54,6 +54,8 @@
   <script src="libs/byte-pushers/gov.va.iam.acs.ams.models.ResponseStatusTransformer.js"></script>
   <script src="libs/byte-pushers/gov.va.iam.acs.ams.exceptions.TransformerException.js"></script>
   <script src="libs/byte-pushers/gov.va.iam.acs.ams.exceptions.WebServiceException.js"></script>
+  <script src="libs/byte-pushers/gov.va.iam.acs.ams.utils.converters.date.DateConverter.js"></script>
+  <script src="libs/byte-pushers/gov.va.iam.acs.ams.utils.NumberUtility.js"></script>
   <script src="libs/byte-pushers/gov.va.iam.acs.ams.filters.MessageFilters.js"></script>
   <script src="libs/byte-pushers/gov.va.iam.acs.ams.handlers.MessageHandler.js"></script>
   <script src="libs/byte-pushers/gov.va.iam.acs.ams.models.Message.js"></script>
@@ -79,5 +81,7 @@
   <script src="components/person-search/person-search-directive.js"></script>
   <script src="components/person-search/person-search-service.js"></script>
   <script src="components/person-search/person-search-result-modal-controller.js"></script>
+  <script src="components/delegation/delegation-module.js"></script>
+  <script src="components/delegation/delegation-controller.js"></script>
 </body>
 </html>
