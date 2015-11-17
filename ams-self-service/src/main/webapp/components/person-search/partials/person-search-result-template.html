@@ -12,11 +12,13 @@
         <!--div class="col-md-1">&nbsp;</div-->
         <div class="col-md-12">
             <h3>Search Results</h3>
-            <table when-ready="hidePagination()" wait-for-interpolation="true" ng-table-dynamic="personSearchResultModalController.tableParams with personSearchResultModalController.cols" class="table table-condensed table-bordered table-striped">
+            <table when-ready="hidePagination()" ready-check="checkIfReady()"
+                   ng-table-dynamic="personSearchResultModalController.tableParams with personSearchResultModalController.cols"
+                   class="table table-condensed table-bordered table-striped">
                 <tr ng-repeat="row in $data">
                     <td ng-repeat="col in $columns" class="text-center">
                         <div ng-if="col.field === 'select'">
-                            <input type="radio" ng-model="selected.person.secid" value="{{row.secid}}">
+                            <input type="radio" ng-model="selected.personIcn" value="{{row.icn[0]}}">
                         </div>
                         <div ng-if="col.field !== 'select'">{{row[col.field]}}</div>
                     </td>
@@ -28,7 +30,9 @@
     <div class="row" style="padding: 10px;">
         <div class="col-md-12">
             <div style="float: right">
-                <button class="btn btn-primary" type="button" ng-click="ok()" ng-disabled="selected.person === null">OK</button>
+                <button class="btn btn-primary" type="button" ng-click="ok()" ng-disabled="selected.personIcn === null">
+                    OK
+                </button>
                 <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
             </div>
         </div>

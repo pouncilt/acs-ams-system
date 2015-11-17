@@ -55,12 +55,35 @@ VA_AMS.converters.DateConverter.convertToDate_MMMDDYYYY = function (d) {
     date.setHours(0, 0, 0, 0);
 	return date;
 };
+VA_AMS.converters.DateConverter.convertToDate_YYYYMMDD = function (d) {
+    "use strict";
+    var month, day, year, date = new Date();
+    if (d.length !== 8) {
+        throw new VA_AMS.exceptions.InvalidParameterException("Date String: " + d + " should be in format YYYYMMDD.");
+    }
+    if (VA_AMS.NumberUtility.isNotANumber(d.substring(0, 4))) {
+        throw new VA_AMS.exceptions.InvalidParameterException("Date String: " + d.substring(0, 4) + " must be numeric.");
+    }
+    if (VA_AMS.NumberUtility.isNotANumber(d.substring(4, 6))) {
+        throw new VA_AMS.exceptions.InvalidParameterException("Date String: " + d.substring(4, 6) + " must be numeric.");
+    }
+    if (VA_AMS.NumberUtility.isNotANumber(d.substring(6))) {
+        throw new VA_AMS.exceptions.InvalidParameterException("Date String: " + d.substring(6) + " must be numeric.");
+    }
+    year = Number(d.substring(0, 4));
+    month = Number(d.substring(4, 6)) - 1;
+    day = Number(d.substring(6));
+    date.setFullYear(year, month, day);
+    date.setHours(0, 0, 0, 0);
+    return date;
+};
 VA_AMS.converters.DateConverter.convertToDate_YYYYMMDDThhmmsssTZD = function (iso8601DateString) {
     "use strict";
     return VA_AMS.converters.DateConverter.convertToISO8601Date(iso8601DateString);
 };
 VA_AMS.converters.DateConverter.convertToString_YYYYMMDD = function (d, delimeter) {
     "use strict";
+    delimeter = (Object.isDefined(delimeter)) ? delimeter : "";
     if(!Object.isDate(d)) throw Error("parameter d must be a Date Object.");
 
     return d.getFullYear() + delimeter + VA_AMS.NumberUtility.padLeft(d.getMonth()+1, 1)+ delimeter + d.getDate();
@@ -100,18 +123,21 @@ VA_AMS.converters.DateConverter.convertToDate = function (d, dateFormat) {
 	'use strict';
 	var date = null;
 	switch (dateFormat) {
-    case VA_AMS.converters.DateConverter.MDDYYYY_DATE_FORMAT:
-        date = VA_AMS.converters.DateConverter.convertToDate_MDDYYYY(d);
-        break;
-    case VA_AMS.converters.DateConverter.MMDDYYYY_DATE_FORMAT:
-        date = VA_AMS.converters.DateConverter.convertToDate_MMDDYYYY(d);
-        break;
-    case VA_AMS.converters.DateConverter.MMMDDYYYY_DATE_FORMAT:
-        date = VA_AMS.converters.DateConverter.convertToDate_MMMDDYYYY(d);
-        break;
-    case VA_AMS.converters.DateConverter.YYYYMMDDThhmmsssTZD_DATE_FORMAT:
-        date = VA_AMS.converters.DateConverter.convertToDate_YYYYMMDDThhmmsssTZD(d);
-        break;
+        case VA_AMS.converters.DateConverter.MDDYYYY_DATE_FORMAT:
+            date = VA_AMS.converters.DateConverter.convertToDate_MDDYYYY(d);
+            break;
+        case VA_AMS.converters.DateConverter.MMDDYYYY_DATE_FORMAT:
+            date = VA_AMS.converters.DateConverter.convertToDate_MMDDYYYY(d);
+            break;
+        case VA_AMS.converters.DateConverter.MMMDDYYYY_DATE_FORMAT:
+            date = VA_AMS.converters.DateConverter.convertToDate_MMMDDYYYY(d);
+            break;
+        case VA_AMS.converters.DateConverter.YYYYMMDDThhmmsssTZD_DATE_FORMAT:
+            date = VA_AMS.converters.DateConverter.convertToDate_YYYYMMDDThhmmsssTZD(d);
+            break;
+        case VA_AMS.converters.DateConverter.YYYYMMDD_DATE_FORMAT:
+            date = VA_AMS.converters.DateConverter.convertToDate_YYYYMMDD(d);
+            break;
 	}
 	return date;
 };

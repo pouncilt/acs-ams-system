@@ -5,8 +5,13 @@
 
 var vaPersonSearchModule = angular.module('gov.va.person.search.module', ['ngRoute', 'ngTable', 'ui.bootstrap'])
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/person-search', {
-            templateUrl: 'components/person-search/person-search.html'
+        $routeProvider.when('/attended-person-search', {
+            templateUrl: 'components/person-search/person-search.html',
+            attendedSearch: 'true'
+        });
+        $routeProvider.when('/unattended-person-search', {
+            templateUrl: 'components/person-search/person-search.html',
+            attendedSearch: 'false'
         });
     }])
     .run(['ngTableDefaults', function(ngTableDefaults) {

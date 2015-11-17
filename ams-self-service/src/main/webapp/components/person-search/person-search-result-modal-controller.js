@@ -9,7 +9,7 @@ vaPersonSearchModule.controller('PersonSearchResultModalController', ['$scope', 
         { field: "lastName", title: "Last Name", sortable: "lastName", show: true },
         { field: "firstName", title: "First Name", sortable: "firstName", show: true },
         { field: "middleName", title: "Middle Name", sortable: "middleName", show: true },
-        { field: "dob", title: "Date of Birth", sortable: "dob", show: true },
+        {field: "birthDate", title: "Date of Birth", sortable: "birthDate", show: true},
         { field: "gender", title: "Gender", sortable: "gender", show: true },
         { field: "ssn", title: "SSN", sortable: "ssn", show: true },
         { field: "city", title: "City", sortable: "city", show: true },
@@ -48,15 +48,21 @@ vaPersonSearchModule.controller('PersonSearchResultModalController', ['$scope', 
     }
 
     $scope.selected = {
-        person: new VAPerson().toUIObject
+        person: null,
+        personIcn: null,
     };
 
     $scope.ok = function () {
         items.some(function (person, index, array) {
-            if(person.secid === $scope.selected.person.secid) {
-                $scope.selected.person = person;
-                return true;
-            }
+            person.icn.some(function (someIcn) {
+                if (someIcn === $scope.selected.personIcn) {
+                    $scope.selected.person = person;
+                    return true;
+                }
+
+                return false;
+            });
+
         });
         $uibModalInstance.close($scope.selected.person);
     };
@@ -68,6 +74,12 @@ vaPersonSearchModule.controller('PersonSearchResultModalController', ['$scope', 
 
     $scope.hidePagination = function() {
         hidePagination();
+    };
+
+    $scope.checkIfReady = function () {
+        var isReady = ($("button").length > 0) ? true : false;
+
+        return isReady;
     };
 
     refreshNgTable();

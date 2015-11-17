@@ -8,6 +8,7 @@ function PhoneNumber(phoneNumberConfig) {
     var areaCode = (Object.isDefined(phoneNumberConfig) && Object.isDefined(phoneNumberConfig.areaCode))? phoneNumberConfig.areaCode: null;
     var exchangeCode = (Object.isDefined(phoneNumberConfig) && Object.isDefined(phoneNumberConfig.exchangeCode))? phoneNumberConfig.exchangeCode: null;
     var localNumber = (Object.isDefined(phoneNumberConfig) && Object.isDefined(phoneNumberConfig.localNumber))? phoneNumberConfig.localNumber: null;
+    var phoneNumber = (Object.isDefined(phoneNumberConfig) && Object.isDefined(phoneNumberConfig.phoneNumber)) ? phoneNumberConfig.phoneNumber : null;
     var id = (Object.isDefined(phoneNumberConfig) && Object.isDefined(phoneNumberConfig.id))? phoneNumberConfig.id: null;
     var createdDate = (Object.isDefined(phoneNumberConfig) && Object.isDefined(phoneNumberConfig.createdDate))? new Date(phoneNumberConfig.createdDate): new Date();
     var lastModifiedDate = (Object.isDefined(phoneNumberConfig) && Object.isDefined(phoneNumberConfig.lastModifiedDate))? new Date(phoneNumberConfig.lastModifiedDate): createdDate;
@@ -20,7 +21,7 @@ function PhoneNumber(phoneNumberConfig) {
     };
 
     this.getPhoneNumber = function() {
-        return phoneNumber;
+        return (Object.isDefined(phoneNumber)) ? phoneNumber : this.getAreaCode() + this.getExchangeCode() + this.getLocalNumber;
     };
 
     this.getProtectedMetaData = function(){
@@ -75,6 +76,7 @@ function PhoneNumber(phoneNumberConfig) {
             jsonAreaCode = (Object.isDefined(areaCode))? "\"" + areaCode + "\"" : null,
             jsonExchangeCode = (Object.isDefined(exchangeCode))? "\"" + exchangeCode + "\"" : null,
             jsonLocalNumber = (Object.isDefined(localNumber))? "\"" + localNumber + "\"" : null,
+            jsonPhoneNumber = (Object.isDefined(phoneNumber)) ? "\"" + phoneNumber + "\"" : this.getPhoneNumber(),
             jsonId = (Object.isDefined(id))? id : null,
             jsonCreatedDate = (Object.isDefined(createdDate))? "\"" + createdDate.toJSON() + "\"" : null,
             jsonLastModifiedDate = (Object.isDefined(lastModifiedDate))? "\"" + lastModifiedDate.toJSON() + "\"" : null,
@@ -88,6 +90,7 @@ function PhoneNumber(phoneNumberConfig) {
                 "\"areaCode\": " + jsonAreaCode + "," +
                 "\"exchangeCode\": " + jsonExchangeCode + "," +
                 "\"localNumber\": " + jsonLocalNumber  + "," +
+                "\"phoneNumber\": " + jsonPhoneNumber + "," +
                 "\"id\": " + jsonId + "," +
                 "\"createdDate\": " + jsonCreatedDate + "," +
                 "\"lastModifiedDate\": " + jsonLastModifiedDate + "," +
@@ -113,6 +116,7 @@ PhoneNumber.prototype.toString = function () {
         "areaCode: " + this.getAreaCode() + "," +
         "exchangeCode: " + this.getExchangeCode() + "," +
         "localNumber: " + this.getLocalNumber() + "," +
+        "phoneNumber: " + this.getPhoneNumber() + "," +
         "createdBy:" + this.getCreatedBy() + "," +
         "createdDate:" + this.getCreatedDate() + "," +
         "lastModifiedBy:" + this.getLastModifiedBy() + "," +

@@ -37,6 +37,13 @@ vaPersonSearchModule.service('PersonSearchService', ['$http', '$q', '$resource',
             url: "/ams/webapi/VAPersons",
             isArray: false,
             transformResponse: myApp.appendTransform($http.defaults.transformResponse, self.queryTransformer)
+        },
+        queryPerson: {
+            method: "POST",
+            params: {}, //search parameters
+            url: "/ams/webapi/VAPersons",
+            isArray: false,
+            transformResponse: myApp.appendTransform($http.defaults.transformResponse, self.queryTransformer)
         }
     };
     var options = {stripTrailingSlashes: true};
@@ -67,10 +74,6 @@ vaPersonSearchModule.service('PersonSearchService', ['$http', '$q', '$resource',
         // Perform unique successful handling logic here for Query request.
         response.getPayload().forEach(function(vaPerson, index, vaPersonArray) {
             vaPersonArray[index] = vaPerson.toUIObject();
-            var date = vaPersonArray[index].dob;
-            var format = 'yyyyMMdd';
-            var timezone = "";
-            vaPersonArray[index].dob = $filter('date')(date, format, timezone)
         });
 
         return response.getPayload();
@@ -106,7 +109,26 @@ vaPersonSearchModule.service('PersonSearchService', ['$http', '$q', '$resource',
 
         if(!Object.isDefined(requestParameters)) throw new VA_AMS.exceptions.NullPointerException("requestParameter is required.");
 
-        resource.query(getRouteParameters(requestParameters)).$promise.then(function(response) {
+        resource.query(/*getRouteParameters(*/requestParameters/*)*/).$promise.then(function (response) {
+            // No business logic here because this function is a private function a can not be unit tested.
+            // All business logic should go in call back function.
+            deferred.resolve(self.successfulQueryCallBack(response));
+        }, function (webServiceException) {
+            // No business logic here because this function is a private function a can not be unit tested.
+            // All business logic should go in call back function.
+            self.errorQueryCallBack(webServiceException);
+            deferred.reject(webServiceException);
+        });
+
+        return deferred.promise;
+    };
+
+    this.queryPerson = function (requestParameters) {
+        var deferred = $q.defer();
+
+        if (!Object.isDefined(requestParameters)) throw new VA_AMS.exceptions.NullPointerException("requestParameter is required.");
+
+        resource.queryPerson(/*getRouteParameters(*/requestParameters/*)*/).$promise.then(function (response) {
             // No business logic here because this function is a private function a can not be unit tested.
             // All business logic should go in call back function.
             deferred.resolve(self.successfulQueryCallBack(response));

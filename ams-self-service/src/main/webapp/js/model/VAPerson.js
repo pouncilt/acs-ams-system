@@ -3,6 +3,7 @@
  */
 function VAPerson(vaPersonInfoConfig) {
     var self = this;
+    var TO_STRING_DATE_FORMAT_CONFIG = (Object.isDefined(vaPersonInfoConfig) && Object.isString(vaPersonInfoConfig.toStringDateFormatConfig)) ? vaPersonInfoConfig.toStringDateFormatConfig : VA_AMS.converters.DateConverter.YYYYMMDD_DATE_FORMAT;
     var ipid = (Object.isDefined(vaPersonInfoConfig) && Object.isString(vaPersonInfoConfig.ipid)) ? vaPersonInfoConfig.ipid : null;
     var secid = (Object.isDefined(vaPersonInfoConfig) && Object.isString(vaPersonInfoConfig.secid)) ? vaPersonInfoConfig.secid : null;
     var firstName = (Object.isDefined(vaPersonInfoConfig) && Object.isString(vaPersonInfoConfig.firstName)) ? vaPersonInfoConfig.firstName : null;
@@ -11,15 +12,22 @@ function VAPerson(vaPersonInfoConfig) {
     var prefix = (Object.isDefined(vaPersonInfoConfig) && Object.isString(vaPersonInfoConfig.prefix)) ? vaPersonInfoConfig.prefix : null;
     var ssn = (Object.isDefined(vaPersonInfoConfig) && Object.isString(vaPersonInfoConfig.ssn)) ? vaPersonInfoConfig.ssn : null;
     var gender = (Object.isDefined(vaPersonInfoConfig) && Object.isString(vaPersonInfoConfig.gender)) ? vaPersonInfoConfig.gender : null;
-    var birthDate = Object.isDefined(vaPersonInfoConfig) ? ((Object.isNumeric(vaPersonInfoConfig.birthDate)) ? new Date(vaPersonInfoConfig.birthDate) : (Object.isString(vaPersonInfoConfig.birthDate))? createDateFromString(vaPersonInfoConfig.birthDate):  null) : null;
+    var birthDate = (Object.isDefined(vaPersonInfoConfig) && Object.isString(vaPersonInfoConfig.birthDate)) ? createDateFromString(vaPersonInfoConfig.birthDate) : null;
+    var deathDate = (Object.isDefined(vaPersonInfoConfig) && Object.isString(vaPersonInfoConfig.deathDate)) ? createDateFromString(vaPersonInfoConfig.deathDate) : null;
     var addresses = (Object.isDefined(vaPersonInfoConfig) && Object.isArray(vaPersonInfoConfig.addresses)) ? createAddresses(vaPersonInfoConfig.addresses) : [];
     var phoneNumbers = (Object.isDefined(vaPersonInfoConfig) && Object.isArray(vaPersonInfoConfig.phones)) ? createPhones(vaPersonInfoConfig.phones) : [];
     var icn = (Object.isDefined(vaPersonInfoConfig) && Object.isArray(vaPersonInfoConfig.icn)) ? vaPersonInfoConfig.icn : [];
     var edipi = (Object.isDefined(vaPersonInfoConfig) && Object.isArray(vaPersonInfoConfig.edipi)) ? vaPersonInfoConfig.edipi : [];
 
-    function createDateFromString(dateMillisecondAsString){
-        var someDate = new Date(parseInt(dateMillisecondAsString));
+    function createDateFromString(someDateYYYYMMDD) {
+        var someDate;
 
+        switch (TO_STRING_DATE_FORMAT_CONFIG) {
+            case VA_AMS.converters.DateConverter.YYYYMMDD_DATE_FORMAT:
+                someDate = VA_AMS.converters.DateConverter.convertToDate(someDateYYYYMMDD, TO_STRING_DATE_FORMAT_CONFIG);
+                break;
+        }
+        
         return someDate;
     }
 
@@ -108,11 +116,19 @@ function VAPerson(vaPersonInfoConfig) {
         return ssn;
     };
 
+    this.getMaskedSsn = function () {
+        return (Object.isDefined(this.getSsn())) ? "#####" + this.getSsn().substring(8) : "";
+    };
+
     this.getGender = function() {
         return gender;
     };
 
     this.getBirthDate = function() {
+        return birthDate;
+    };
+
+    this.getDeathDate = function () {
         return birthDate;
     };
 
@@ -126,6 +142,24 @@ function VAPerson(vaPersonInfoConfig) {
 
     this.getIcn = function() {
         return icn;
+    };
+
+    this.hasOneOrMoreEqualIcns = function (someOtherIcnArray) {
+        var hasOneOrMoreSameIcns = false;
+
+        if (Object.isArray(someOtherIcnArray)) {
+            self.icn.forEach(function (icn, index, icnArray) {
+                someOtherIcnArray.some(function (someOtherIcn, someOtherIcnArray2Index, someOtherIcnArray2) {
+                    if (someOtherIcn === icn) {
+                        return true;
+                    }
+                    return false;
+                })
+            });
+        }
+
+
+        return hasOneOrMoreSameIcns
     };
 
     this.getEdiPi = function() {
@@ -142,7 +176,8 @@ function VAPerson(vaPersonInfoConfig) {
             jsonPrefix = (Object.isString(prefix))? "\"" + prefix + "\"" : null,
             jsonSsn = (Object.isNumeric(ssn))? ssn : (Object.isString(ssn))? "\"" + ssn + "\"": null,
             jsonGender = (Object.isString(gender))? "\"" + gender + "\"" : null,
-            jsonBirthDate = (Object.isDate(birthDate))? "\"" + birthDate.toJSON() + "\"" : (Object.isNumeric(birthDate))? birthDate: null,
+            jsonBirthDate = (Object.isDate(birthDate)) ? VA_AMS.converters.DateConverter.convertToString(birthDate, TO_STRING_DATE_FORMAT_CONFIG) : null,
+            jsonDeathDate = (Object.isDate(deathDate)) ? VA_AMS.converters.DateConverter.convertToString(deathDate, TO_STRING_DATE_FORMAT_CONFIG) : null,
             jsonAddresses = (Object.isArray(addresses))? getAddressesAsJson(serializeUIProperties) : "[]",
             jsonPhoneNumbers = (Object.isArray(phoneNumbers))? getPhoneNumbersAsJson(serializeUIProperties) : "[]",
             jsonIcn = (Object.isArray(icn))? getIcnAsJson(serializeUIProperties) : "[]",
@@ -163,6 +198,7 @@ function VAPerson(vaPersonInfoConfig) {
                 "\"prefix\": " + jsonPrefix  + "," +
                 "\"gender\": " + jsonGender  + "," +
                 "\"birthDate\": " + jsonBirthDate  + "," +
+                "\"deathDate\": " + jsonDeathDate + "," +
                 "\"icn\": " + jsonIcn  + "," +
                 "\"ediPi\": " + jsonEdiPi + "," +
                 "\"phoneNumbers\": " + jsonPhoneNumbers  + "," +
@@ -178,13 +214,11 @@ function VAPerson(vaPersonInfoConfig) {
 
     this.toUIObject = function(){
         var UIObject = JSON.parse(this.toJSON(true));
-
-        UIObject.dob = self.getBirthDate();
-        UIObject.street1 = (Object.isDefined(self.getAddresses()[0])) ? self.getAddresses()[0].getStreet1() : "";
-        UIObject.street2 = (Object.isDefined(self.getAddresses()[0])) ?self.getAddresses()[0].getStreet2() : "";
-        UIObject.city = (Object.isDefined(self.getAddresses()[0])) ?self.getAddresses()[0].getCity() : "";
-        UIObject.state = (Object.isDefined(self.getAddresses()[0])) ?self.getAddresses()[0].getState() : "";
-        UIObject.zip = (Object.isDefined(self.getAddresses()[0])) ?self.getAddresses()[0].getZip : "";
+        var primaryAddressUIObject = (Object.isDefined(self.getAddresses()[0])) ? self.getAddresses()[0].toUIObject() : {};
+        UIObject.displayPrimaryAddress = (Object.isDefined(self.getAddresses()[0])) ? self.getAddresses()[0].toString() : "";
+        UIObject.city = (Object.isDefined(primaryAddressUIObject.city)) ? primaryAddressUIObject.city : "";
+        UIObject.state = (Object.isDefined(primaryAddressUIObject.state)) ? primaryAddressUIObject.state : "";
+        UIObject.maskedSsn = this.getMaskedSsn();
 
         return UIObject;
     };
@@ -201,6 +235,7 @@ VAPerson.prototype.toString = function () {
         "prefix: " + this.getPrefix() + "," +
         "gender: " + this.getGender() + "," +
         "birthDate: " + this.getBirthDate() + "," +
+        "deathDate: " + this.getDeathDate() + "," +
         "icn: " + this.getIcn()+ "," +
         "edipi: " + this.getEdiPi()+ "," +
         "phoneNumbers: " + this.getPhoneNumbers()+ "," +

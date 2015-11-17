@@ -1,24 +1,39 @@
 /**
  * Created by tonte on 10/14/15.
  */
-vaPersonSearchModule.controller('PersonSearchController', ['$scope', '$location', '$q', '$uibModal', 'NgTableParams', 'PersonSearchService', function ($scope, $location, $q, $uibModal, NgTableParams, PersonSearchService) {
-    var unattendedSearch = (Object.isDefined($scope.staffInfo) && Object.isDefined($scope.veteranInfo))? true: false;
+vaPersonSearchModule.controller('PersonSearchController', ['$scope', '$location', '$route', '$q', '$uibModal', 'NgTableParams', 'PersonSearchService', function ($scope, $location, $route, $q, $uibModal, NgTableParams, PersonSearchService) {
+    //var attendedSearch = (Object.isDefined($scope.staffInfo) && Object.isDefined($scope.veteranInfo))? true: false;
+    var attendedSearch = ($route.current.attendedSearch === "true") ? true : false;
 
     $scope.errorMessageExist = false;
     $scope.errorMessage = {value: null};
     $scope.personSearchCompleted = false;
-    $scope.searchCriteria = {
-        ssn: null,
-        firstName: null,
-        lastName: null,
-        middleName: null,
-        dob: null,
-        gender: null,
-        primaryPhoneNumber: null,
-        streetAddress: null,
-        city: null,
-        state: null,
-        zipcode: null
+    $scope.vaPersonSearchCriteriaInfo = {
+        person: {
+            ssn: null,
+            firstName: null,
+            lastName: null,
+            middleName: null,
+            birthDate: null,
+            gender: null,
+            phones: [
+                {
+                    phoneNumber: null,
+                    numberType: null
+                }
+
+            ],
+            addresses: [
+                {
+                    street1: null,
+                    street2: null,
+                    city: null,
+                    state: null,
+                    zip: null
+                }
+            ]
+        },
+        attendedSearch: false
     };
     $scope.selectedPerson = new VAPerson().toUIObject();
     $scope.items = ['item1', 'item2', 'item3'];
@@ -30,7 +45,16 @@ vaPersonSearchModule.controller('PersonSearchController', ['$scope', '$location'
     };
 
     $scope.reset = function(form) {
-        $scope.searchCriteriaInfo = {};
+        $scope.vaPersonSearchCriteriaInfoInfo = {
+            person: {
+                addresses: [],
+                phoneNumbers: [],
+                icn: [],
+                edipi: []
+
+            },
+            attendedSearch: false
+        };
 
         if(form) {
             form.$setPristine();
@@ -38,23 +62,21 @@ vaPersonSearchModule.controller('PersonSearchController', ['$scope', '$location'
         }
     };
 
-    $scope.isUnattendedSearch = function () {
+    $scope.isAttendedSearch = function () {
         return Object.isDefined($scope.staffInfo);
     };
 
     $scope.search = function (vaPersonSearchCriteriaInfo) {
-        var requestParameters = {
-            searchCriteria: vaPersonSearchCriteriaInfo,
-            unattendedSearch: (this.isUnattendedSearch())? true: false
-        };
+        vaPersonSearchCriteriaInfo.attendedSearch = (this.isAttendedSearch()) ? true : false;
 
-        PersonSearchService.query(requestParameters).then(function (searchResults) {
+        PersonSearchService.queryPerson(vaPersonSearchCriteriaInfo).then(function (searchResults) {
             $scope.personSearchCompleted = false;
 
             if(Object.isArray(searchResults) && searchResults.length > 0) {
-                if(unattendedSearch) {
+                if (attendedSearch) {
                     displaySearchResults(searchResults);
                 } else {
+                    $scope.selectedPerson = (Object.isArray(searchResults) && searchResults.length > 0) ? searchResults[0] : new VAPerson().toUIObject();
                     $scope.personSearchCompleted = true;
                 }
 
@@ -88,7 +110,7 @@ vaPersonSearchModule.controller('PersonSearchController', ['$scope', '$location'
 
         modalInstance.result.then(function (selectedPerson) {
             console.log("selectedPerson:" + selectedPerson);
-            $scope.selectedPerson = new VAPerson(selectedPerson).toUIObject();
+            $scope.selectedPerson = selectedPerson; //new VAPerson(selectedPerson).toUIObject();
             $scope.personSearchCompleted = true;
         }, function(error){
             $scope.personSearchCompleted = false;
